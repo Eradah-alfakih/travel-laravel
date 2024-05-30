@@ -27,5 +27,7 @@ Route::resource('drivers', DriverController::class);
 Route::resource('governorates', GovernorateController::class);
 Route::resource('trips', TripController::class);
 Route::resource('reservations', ReservationController::class);
+Route::get('/trips/{trip}/reservations', [TripController::class, 'showReservations'])->name('trips.reservations');
+Route::get('/get-available-buses', [TripController::class,'getAvailableBuses'])->name('getAvailableBuses');
 
 });

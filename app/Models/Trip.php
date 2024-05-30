@@ -23,4 +23,9 @@ class Trip extends Model
     {
         return $this->belongsTo(Governorate::class, 'to_governorate');
     }
+    public function reservations()
+{
+    return $this->hasMany(Reservation::class);
+}
+
 }

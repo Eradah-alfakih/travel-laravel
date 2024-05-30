@@ -28,7 +28,7 @@ class DriverController extends Controller
             'last_name' => 'required|string|max:255',
             'id_number' => 'required|unique:drivers|string|max:255',
             'phone' => 'required|unique:drivers',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|unique:drivers|string|email|max:255',
             'address' => 'required|string|max:255',
             'date_of_birth' => ['required', 'date', function ($attribute, $value, $fail) {
                 if (Carbon::parse($value)->age < 18) {
@@ -64,7 +64,7 @@ class DriverController extends Controller
             'last_name' => 'required|string|max:255',
             'id_number' => 'required|string|max:255',
             'phone' => 'required|unique:drivers,phone,' . $id,
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:drivers,email,' . $id,
             'address' => 'required|string|max:255',
             'date_of_birth' => ['required', 'date', function ($attribute, $value, $fail) {
                 if (Carbon::parse($value)->age < 18) {

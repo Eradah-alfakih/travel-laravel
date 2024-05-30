@@ -61,7 +61,8 @@
             <tr>
                 <td>{{ $governorate->id }}</td>
                 <td>{{ $governorate->name }}</td>
-                <td>{{ $governorate->status }}</td>
+                 <td>{{$governorate->status  == 1 ? 'Active' : 'UnActive' }}</td>
+
                 <td>
                     <!-- Button to trigger modal for editing a governorate -->
                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $governorate->id }}">

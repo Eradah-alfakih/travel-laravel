@@ -2,64 +2,58 @@
 
 @section('content')
 <div class="container">
-    <h2>Trips</h2>
+    <h2>Reservations List</h2>
+    
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    <a href="{{ route('reservations.create') }}" class="btn btn-primary">Create New Reservation</a>
 
-    <!-- Button to trigger modal for adding a trip -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-        Add Trip
-    </button>
-
-    <!-- Table to display trips -->
-    <table class="table mt-3">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Bus ID</th>
-                <th>From Governorate</th>
-                <th>To Governorate</th>
-                <th>Travel Date</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Action</th>
+                <th>Trip</th>
+                <th>Service</th>
+                <th>Seat Number</th>
+                <th>Reservation Date</th>
+                <th>Total</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>ID Number</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Gender</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($trips as $trip)
-            <tr>
-                <td>{{ $trip->id }}</td>
-                <td>{{ $trip->bus_id }}</td>
-                <td>{{ $trip->fromGovernorate->name }}</td>
-                <td>{{ $trip->toGovernorate->name }}</td>
-                <td>{{ $trip->travel_date }}</td>
-                <td>{{ $trip->status }}</td>
-                <td>{{ $trip->type }}</td>
-                <td>
-                    <!-- Button to trigger modal for editing a trip -->
-                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editModal{{ $trip->id }}">
-                        Edit
-                    </button>
-                </td>
-            </tr>
+            @foreach($reservations as $reservation)
+                <tr>
+                    <td>{{ $reservation->trip->fromGovernorate->name }} to {{ $reservation->trip->toGovernorate->name }} on {{ $reservation->trip->travel_date }}</td>
+                    <td>{{ $reservation->service->name }}</td>
+                    <td>{{ $reservation->seat_number }}</td>
+                    <td>{{ $reservation->reservation_date }}</td>
+                    <td>{{ $reservation->total }}</td>
+                    <td>{{ $reservation->traveler->first_name }}</td>
+                    <td>{{ $reservation->traveler->last_name }}</td>
+                    <td>{{ $reservation->traveler->id_number }}</td>
+                    <td>{{ $reservation->traveler->phone }}</td>
+                    <td>{{ $reservation->traveler->address }}</td>
+                    <td>{{ $reservation->traveler->gender == 1 ? 'Male' : 'Female' }}</td>
+                    <td>
+                        <a href="{{ route('reservations.edit', $reservation->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
 
-    <!-- Modal for adding a trip -->
-    @include('admin.trips.partials.add_modal', ['governorates' => $governorates])
-
-    <!-- Include modals for editing each trip -->
-    @foreach($trips as $trip)
-        @include('admin.trips.partials.edit_modal', ['trip' => $trip, 'governorates' => $governorates])
-    @endforeach
 </div>
-
-<!-- Include jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-    // Ensure that addForm and editForm submissions are handled correctly
-    $('#addModal').on('shown.bs.modal', function () {
-        $('#addForm').trigger('focus')
-    });
-</script>
 @endsection

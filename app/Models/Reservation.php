@@ -10,4 +10,16 @@ class Reservation extends Model
 {
     use HasFactory,SoftDeletes;
     protected $guarded = [];
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class);
+    }
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+    public function traveler()
+    {
+        return $this->belongsTo(Traveler::class);
+    }
 }
