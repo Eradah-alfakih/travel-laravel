@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('bus_id');
             $table->unsignedBigInteger('from_governorate');
             $table->unsignedBigInteger('to_governorate');
-            $table->date('travel_date');
+            $table->datetime('travel_date');
             $table->string('status')->default('New');
             $table->string('type')->default('Daily');//dailly or mosame
             $table->timestamps();
