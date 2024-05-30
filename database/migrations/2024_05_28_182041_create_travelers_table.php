@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('id_number');
             $table->string('phone')->unique();
             $table->string('address');
-            $table->date('date_of_birth');
+            $table->string('file');
             $table->string('gender');
             $table->softDeletes();
             $table->timestamps();
