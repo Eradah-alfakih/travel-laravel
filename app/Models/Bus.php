@@ -9,14 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Bus extends Model
 {
     use HasFactory ,SoftDeletes;
-    protected $fillable = [
-        'bus_number',
-        'registration_number',
-        'make',
-        'model',
-        'year_of_manufacture',
-        'capacity',
-        'status',
-        'driver_id',
-    ];
+    protected $guarded = [];
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
 }

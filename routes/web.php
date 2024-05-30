@@ -31,3 +31,12 @@ Route::get('/trips/{trip}/reservations', [TripController::class, 'showReservatio
 Route::get('/get-available-buses', [TripController::class,'getAvailableBuses'])->name('getAvailableBuses');
 
 });
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
